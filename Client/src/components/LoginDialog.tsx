@@ -17,6 +17,7 @@ const LoginDialog = () => {
     email: "",
     password: "",
   });
+
   const { isLoading, error, loginStatus, login } = useLoginAPI();
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -46,7 +47,6 @@ const LoginDialog = () => {
             Email
           </Text>
           <TextField.Root
-            defaultValue="student@example.com"
             placeholder="Enter your email"
             name="email"
             onChange={handleChange}

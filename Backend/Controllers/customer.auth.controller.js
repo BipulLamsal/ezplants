@@ -83,7 +83,54 @@ const authAdmin = async (req, res) => {
   return res.status(201).json({ status: true });
 };
 
+const getAllCustomers = async (req, res) => {
+  try {
+    const customersWithTransactionDetails = await Customer.aggregate([
+      {
+        $lookup: {
+          from: "transactions",
+          localField: "_id",
+          foreignField: "customer",
+          as: "transactions",
+        },
+      },
+      {
+        $unwind: "$transactions",
+      },
+      {
+        $lookup: {
+          from: "plants",
+          localField: "transactions.plant",
+          foreignField: "_id",
+          as: "plant",
+        },
+      },
+      {
+        $unwind: "$plant",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          email: { $first: "$email" },
+          fullname: { $first: "$fullname" },
+          numTransactions: { $sum: 1 },
+          totalPrice: {
+            $sum: { $multiply: ["$transactions.quantity", "$plant.price"] },
+          },
+        },
+      },
+    ]);
+
+    return res
+      .status(200)
+      .json({ status: true, data: customersWithTransactionDetails });
+  } catch (error) {
+    return res.status(500).json({ status: false, msg: error.message });
+  }
+};
+
 module.exports = {
+  getAllCustomers,
   createCustomer,
   loginCustomer,
   authCustomer,

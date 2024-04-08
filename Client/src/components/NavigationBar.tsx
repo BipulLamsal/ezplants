@@ -7,11 +7,13 @@ import LoginDialog from "./LoginDialog";
 import RegisterDialog from "./RegisterDialog";
 import { useLoginButton } from "../context/LoginContext";
 import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
   const { theme, toggleTheme } = useTheme();
   const { login } = useLoginButton();
   const { isAuthenticated, isLoading, logout } = useAuthContext();
+  const navigate = useNavigate();
   return (
     <div className="flex flex-row justify-between py-7">
       <div className="flex flex-row items-center">

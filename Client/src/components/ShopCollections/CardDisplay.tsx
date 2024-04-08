@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ShopCard from "./ShopCard";
+import { Spinner, Text } from "@radix-ui/themes";
 
 interface Product {
   _id: number;
@@ -31,9 +32,18 @@ const CardDisplay: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {products.map((product) => (
-        <ShopCard key={product._id} product={product} />
-      ))}
+      {products.length > 0 &&
+        products.map(
+          (product) =>
+            product.stock > 0 && (
+              <ShopCard key={product._id} product={product} />
+            )
+        )}
+      {products.length == 0 && (
+        <Text className="flex justify-center items-center gap-2">
+          <Spinner></Spinner> No Data available
+        </Text>
+      )}
     </div>
   );
 };

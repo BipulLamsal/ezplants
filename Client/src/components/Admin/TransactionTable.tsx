@@ -39,7 +39,7 @@ const TransactionTable: React.FC = () => {
             <Table.Row key={tra._id}>
               <Table.RowHeaderCell>{tra.plant.name}</Table.RowHeaderCell>
               <Table.Cell>{tra.quantity}</Table.Cell>
-              <Table.Cell>$ {tra.plant.price}</Table.Cell>
+              <Table.Cell>$ {tra.plant.price * tra.quantity}</Table.Cell>
               <Table.Cell>{tra.customer.email}</Table.Cell>
               <Table.Cell>{tra.transactionDateTime}</Table.Cell>
             </Table.Row>

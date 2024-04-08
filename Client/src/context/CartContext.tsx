@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-// Define the shape of a cart item
 interface CartItem {
   _id: number;
   name: string;
@@ -32,6 +31,7 @@ export const useCart = () => {
 interface CardProviderProps {
   children: ReactNode;
 }
+
 export const CartProvider: React.FC<CardProviderProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -39,11 +39,13 @@ export const CartProvider: React.FC<CardProviderProps> = ({ children }) => {
     const isItemInCart = cartItems.some(
       (cartItem) => cartItem._id === item._id
     );
+    console.log(isItemInCart);
     if (!isItemInCart) {
       setCartItems((prevItems) => [...prevItems, { ...item, quantity: 1 }]);
       console.log(cartItems);
     }
   };
+
   const updateCartItem = (updatedItem: CartItem) => {
     const updatedCartItems = cartItems.map((item) =>
       item._id === updatedItem._id ? updatedItem : item
@@ -58,7 +60,13 @@ export const CartProvider: React.FC<CardProviderProps> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addItemToCart, updateCartItem, deleteCartItem }}
+      value={{
+        cartItems,
+        setCartItems,
+        addItemToCart,
+        updateCartItem,
+        deleteCartItem,
+      }}
     >
       {children}
     </CartContext.Provider>

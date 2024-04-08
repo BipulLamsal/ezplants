@@ -6,6 +6,8 @@ import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { CartProvider } from "./context/CartContext";
 import CartDialog from "./components/ShopCollections/CartDialog";
 import CartButton from "./components/ShopCollections/CartButton";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const { theme } = useTheme();
 
@@ -20,6 +22,7 @@ function App() {
     >
       <main className="w-full relative container mx-auto px-[10px] md:px-[200px]">
         <NavigationBar></NavigationBar>
+        <ToastContainer />
         <CartProvider>
           <CardDispay></CardDispay>
           <Dialog.Root>

@@ -12,17 +12,23 @@ import {
 } from "@radix-ui/themes";
 import { useCart } from "../../context/CartContext";
 import CartInnerCard from "./CartInnerCard";
+import { toast } from "react-toastify";
 
 const CartDialog = () => {
-  const { cartItems, updateCartItem, deleteCartItem } = useCart();
-
+  const { cartItems, setCartItems, updateCartItem, deleteCartItem } = useCart();
   const handleQuantityChange = (itemId, quantity) => {
     const updatedItem = cartItems.find((item) => item._id === itemId);
-    alert("hello");
     if (updatedItem) {
       updatedItem.quantity = parseInt(quantity);
       updateCartItem(updatedItem);
     }
+  };
+
+  const showTotalPrice = () => {
+    const totalSum = cartItems.reduce((acc, item) => {
+      return acc + item.price * item.quantity;
+    }, 0);
+    return totalSum;
   };
 
   const handleSubmit = async () => {
@@ -41,11 +47,15 @@ const CartDialog = () => {
         }
       );
 
+      if (response.status == 401) {
+        toast("User Not Logged in");
+      }
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        console.log("Data sent successfully:", data);
+        toast("Request Success - Review Email for Further Process");
+        setCartItems([]);
       } else {
-        console.error("Failed to send data:", response.statusText);
+        toast(`Request Failed ${data.msg}`);
       }
     } catch (error) {
       console.error("Error sending data:", error.message);
@@ -67,6 +77,7 @@ const CartDialog = () => {
             ))}
           </ScrollArea>
           <Flex gap="3" mt="4" justify="end">
+            <Text> Total Cost : ${showTotalPrice()}</Text>
             <Dialog.Close>
               <Button variant="soft" color="gray">
                 Cancel

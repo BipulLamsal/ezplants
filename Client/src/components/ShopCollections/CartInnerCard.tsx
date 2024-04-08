@@ -10,7 +10,7 @@ import {
 } from "@radix-ui/themes";
 import { FaDeleteLeft } from "react-icons/fa6";
 
-const CartInnerCard = ({ item }) => {
+const CartInnerCard = ({ item, deleteCartItem, handleQuantityChange }) => {
   return (
     <Box key={item._id} className="py-1">
       <Card>
@@ -22,14 +22,17 @@ const CartInnerCard = ({ item }) => {
             </Text>
             <Text as="div" size="2" color="gray">
               Qunatity :
-              <Select.Root defaultValue={item.quantity.toString()} size="1">
+              <Select.Root
+                defaultValue={item.quantity.toString()}
+                size="1"
+                onValueChange={(value) => {
+                  handleQuantityChange(item._id, value);
+                }}
+              >
                 <Select.Trigger variant="soft" className="ml-2" />
                 <Select.Content>
                   {[...Array(parseInt(item.stock)).keys()].map((index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleQuantityChange(item._id, index + 1)}
-                    >
+                    <div key={index}>
                       <Select.Item value={String(index + 1)}>
                         {index + 1}
                       </Select.Item>
@@ -41,7 +44,7 @@ const CartInnerCard = ({ item }) => {
           </Box>
           <Box className="flex-1" />
           <Text as="div" size="2" weight="bold">
-            ${item.price}
+            ${parseInt(item.quantity) * parseInt(item.price)}
           </Text>
           <Button
             variant="soft"

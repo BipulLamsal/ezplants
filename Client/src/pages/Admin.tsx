@@ -6,6 +6,7 @@ import useAdminAuth from "../hooks/useAdminAuth";
 import { useEffect, useState } from "react";
 import Plants from "../components/Admin/Plants";
 import TransactionTable from "../components/Admin/TransactionTable";
+import UserTable from "../components/Admin/UserTable";
 
 const Admin = () => {
   const { theme } = useTheme();
@@ -15,7 +16,6 @@ const Admin = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (token) {
       auth(token).then((isAuthenticated) => {
         if (!isAuthenticated) {
@@ -40,15 +40,13 @@ const Admin = () => {
       <Spinner size="3" loading={isLoading}>
         <main className="w-full relative container mx-auto px-[10px] md:px-[200px]">
           <NavigationBar></NavigationBar>
-
           <Tabs.Root defaultValue="plants">
             <Tabs.List>
               <Tabs.Trigger value="plants">Plants</Tabs.Trigger>
               <Tabs.Trigger value="transactions">Transaction</Tabs.Trigger>
               <Tabs.Trigger value="users">Users</Tabs.Trigger>
-              <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
-            </Tabs.List>
 
+            </Tabs.List>
             <Box pt="3">
               <Tabs.Content value="plants">
                 <Plants></Plants>
@@ -57,10 +55,9 @@ const Admin = () => {
               <Tabs.Content value="transactions">
                 <TransactionTable></TransactionTable>
               </Tabs.Content>
+
               <Tabs.Content value="users">
-                <Text size="2">
-                  Edit your profile or update contact information.
-                </Text>
+                <UserTable></UserTable>
               </Tabs.Content>
             </Box>
           </Tabs.Root>

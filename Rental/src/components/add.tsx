@@ -32,7 +32,7 @@ const Add = () => {
     const fetchCars = async () => {
         try {
             const response = await axios.get("https://needed-narwhal-charmed.ngrok-free.app/api/rental_user", {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                headers: { 'ngrok-skip-browser-warning': '69420',Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             setCars(response.data);
             console.log(response.data)
@@ -57,11 +57,11 @@ const Add = () => {
         try {
             if (isEditing && editCarId) {
                 await axios.put(`https://needed-narwhal-charmed.ngrok-free.app/api/rental/${editCarId}`, formData, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                    headers: {'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${localStorage.getItem("token")}` }
                 });
             } else {
                 await axios.post("https://needed-narwhal-charmed.ngrok-free.app/api/rental", formData, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                    headers: { 'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${localStorage.getItem("token")}` }
                 });
             }
             setFormData({
@@ -93,7 +93,7 @@ const Add = () => {
     const handleDelete = async (carId: string) => {
         try {
             await axios.delete(`https://needed-narwhal-charmed.ngrok-free.app/api/rental/${carId}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                headers: { 'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             fetchCars();
             toast.success("Deleted Rental Car successfully!");

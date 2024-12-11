@@ -8,7 +8,7 @@ const Notification = () => {
     const fetchNotifications = async () => {
         try {
             const response = await axios.get("https://needed-narwhal-charmed.ngrok-free.app/api/bookings", {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { 'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${token}` },
             });
             setNotifications(response.data);
             console.log(response.data)
@@ -29,6 +29,7 @@ const Notification = () => {
                 {},
                 {
                     headers: {
+                        'ngrok-skip-browser-warning': '69420',
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
                 }
@@ -43,7 +44,7 @@ const Notification = () => {
         try {
             await axios.put(
                 `https://needed-narwhal-charmed.ngrok-free.app/api/booking/${notificationId}/complete`, {},
-                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+                { headers: { 'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
             fetchNotifications();
         } catch (error) {
@@ -55,7 +56,7 @@ const Notification = () => {
         try {
             await axios.put(
                 `https://needed-narwhal-charmed.ngrok-free.app/api/booking/${notificationId}/cancel`, {},
-                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+                { headers: { 'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
             fetchNotifications();
         } catch (error) {
@@ -67,7 +68,7 @@ const Notification = () => {
         <Table.Root>
             <Table.Header>
                 <Table.Row>
-                <Table.ColumnHeaderCell>Created At</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Created At</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Car Name</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Car Owner</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell>Car RequestedBy</Table.ColumnHeaderCell>
@@ -80,7 +81,7 @@ const Notification = () => {
             <Table.Body>
                 {notifications.map((notification: any) => (
                     <Table.Row key={notification.car_id}>
-                         <Table.RowHeaderCell>{notification.created_at}</Table.RowHeaderCell>
+                        <Table.RowHeaderCell>{notification.created_at}</Table.RowHeaderCell>
                         <Table.RowHeaderCell>{notification.car_name}</Table.RowHeaderCell>
                         <Table.RowHeaderCell>{notification.requested_to_email}</Table.RowHeaderCell>
                         <Table.RowHeaderCell>{notification.requested_by_email}</Table.RowHeaderCell>

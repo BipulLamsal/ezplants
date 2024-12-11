@@ -61,8 +61,8 @@ const Navigation = () => {
         try {
             const response = await axios.post(url, payload, {
                 headers: isLogin
-                    ? { "Content-Type": "multipart/form-data" }
-                    : { "Content-Type": "application/json" },
+                    ? { 'ngrok-skip-browser-warning': '69420', "Content-Type": "multipart/form-data" }
+                    : { 'ngrok-skip-browser-warning': '69420', "Content-Type": "application/json" },
             });
 
 
@@ -73,7 +73,7 @@ const Navigation = () => {
                     localStorage.setItem("token", data.access_token);
 
                     const user_response = await axios.get("https://needed-narwhal-charmed.ngrok-free.app/api/user", {
-                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                        headers: { 'ngrok-skip-browser-warning': '69420', Authorization: `Bearer ${localStorage.getItem("token")}` }
                     })
                     if (response.status === 200) {
                         const user_data = user_response.data

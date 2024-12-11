@@ -39,6 +39,7 @@ const Rent: React.FC = () => {
     const axiosInstance = axios.create({
         baseURL: "https://needed-narwhal-charmed.ngrok-free.app/api",
         headers: {
+            'ngrok-skip-browser-warning': '69420',
             Authorization: `Bearer ${token}`,
         },
     });
